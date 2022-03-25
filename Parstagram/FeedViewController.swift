@@ -15,31 +15,41 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var tableView: UITableView!
     var posts = [PFObject]()
+    let myRefreshControl = UIRefreshControl()
+    var postArray = [NSDictionary]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        myRefreshControl.addTarget(self, action: #selector(loadPosts), for: .valueChanged)
+        tableView.refreshControl = myRefreshControl
+        tableView.refreshControl?.tintColor = UIColor.white
+        
         tableView.delegate = self
         tableView.dataSource = self
         
-//        self.tableView.estimatedRowHeight = 440
-//        self.tableView.rowHeight = UITableView.automaticDimension
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        loadPosts()
+    }
+    
+    @objc func loadPosts() {
         let query = PFQuery(className: "Posts")
         query.includeKey("author")
         query.limit = 20
         
         query.findObjectsInBackground { (posts, error) in
             if posts != nil {
+               // self.posts.removeAll()
                 self.posts = posts!
                 self.tableView.reloadData()
+                self.myRefreshControl.endRefreshing()
             }
         }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,7 +63,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let post = posts[indexPath.row]
         let user = post["author"] as! PFUser
-        cell.userNameLabel.text = user.username
+        cell.userNameLabel.text = ("\(user.username ?? "User"):")
         cell.commentLabel.text = (post["caption"] as! String)
         
         let imageFile = post["image"] as! PFFileObject
@@ -66,14 +76,5 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
