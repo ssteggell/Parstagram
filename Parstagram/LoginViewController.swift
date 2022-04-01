@@ -19,10 +19,17 @@ class LoginViewController: UIViewController {
 
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+//        if UserDefaults.standard.bool(forKey: "userLoggedIn") {
+//            self.performSegue(withIdentifier: "loginSegue", sender: self)
+//        }
+    }
+    
     @IBAction func onSignIn(_ sender: Any) {
         PFUser.logInWithUsername(inBackground: self.usernameField.text!, password: self.passwordField.text!) {
                   (user: PFUser?, error: Error?) -> Void in
                   if user != nil {
+//                      UserDefaults.standard.set(true, forKey: "userLoggedIn")
                     self.performSegue(withIdentifier: "loginSegue", sender: nil)
                   } else {
                     self.displayAlert(withTitle: "Error", message: error!.localizedDescription)
@@ -43,6 +50,7 @@ class LoginViewController: UIViewController {
                         self.displayAlert(withTitle: "Error", message: error.localizedDescription)
                         print("Error: \(String(describing: error.localizedDescription))")
                     } else {
+//                        UserDefaults.standard.set(true, forKey: "userLoggedIn")
                         self.performSegue(withIdentifier: "loginSegue", sender: nil)
                     }
                 }

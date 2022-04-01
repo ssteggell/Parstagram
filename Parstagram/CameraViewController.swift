@@ -9,16 +9,29 @@ import UIKit
 import AlamofireImage
 import Parse
 
-class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var commentField: UITextField!
+    
+    var imagePicker = UIImagePickerController()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        imagePicker.delegate = self
+        commentField.delegate = self
+        overrideUserInterfaceStyle = .light
+        
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+
     
     @IBAction func onSubmitButton(_ sender: Any) {
         let post = PFObject(className: "Posts")
@@ -42,18 +55,50 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func onCameraButton(_ sender: Any) {
-        print("Button Pressed")
-        let picker = UIImagePickerController()
-        picker.delegate = self
-        picker.allowsEditing = true
         
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            picker.sourceType = .camera
-        } else {
-            picker.sourceType = .photoLibrary
+            
+            let alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+            alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+                self.openCamera()
+            }))
+            
+            alert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { _ in
+                self.openLibrary()
+            }))
+            
+            alert.addAction(UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil))
+       
+            self.present(alert, animated: true, completion: nil)
+        
+    
+            }
+      
+    
+        
+    
+    func openCamera() {
+        
+        if (UIImagePickerController .isSourceTypeAvailable(.camera))
+             {
+                 imagePicker.sourceType = .camera
+                 imagePicker.allowsEditing = true
+                 self.present(imagePicker, animated: true, completion: nil)
+             }
+             else
+             {
+                 let alert  = UIAlertController(title: "Warning", message: "You don't have camera", preferredStyle: .alert)
+                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                 self.present(alert, animated: true, completion: nil)
+             }
+         }
+    
+    func openLibrary() {
+        
+        if (UIImagePickerController .isSourceTypeAvailable(.photoLibrary)) {
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = true
+            present(imagePicker, animated: true, completion: nil)
         }
-        
-        present(picker, animated: true, completion: nil)
     }
     
     
