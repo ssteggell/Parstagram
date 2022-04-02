@@ -28,9 +28,12 @@ Part 2 gif:
 
 <img src='https://imgur.com/P677cpy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-https://imgur.com/P677cpy
 
+Gif 1 link: 
 https://imgur.com/a/EbDYx7U
+
+Gif 2 link: 
+https://imgur.com/P677cpy
 
 # Parstagram - Part I
 
