@@ -1,7 +1,3 @@
-# Parstagram
-Clone app for Codepath Project
-
-
 # Parstagram - Part II
 
 This is an Instagram clone with a custom Parse backend that allows a user to post photos, view a global photos feed, and add comments!
@@ -26,14 +22,13 @@ The following **bonus** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-Part 1: 
 <img src='https://imgur.com/kFzRZAa.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Part 2: 
-<img src='https://imgur.com/LDD9W2h.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+Part 2 gif:
 
+<img src='https://imgur.com/P677cpy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-https://imgur.com/LDD9W2h
+https://imgur.com/P677cpy
 
 https://imgur.com/a/EbDYx7U
 
